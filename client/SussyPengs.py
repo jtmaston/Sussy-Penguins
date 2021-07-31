@@ -4,8 +4,8 @@ from kivy import Config
 
 Config.set('graphics', 'maxfps', '60')
 
-#Config.set('graphics', 'width', f'{math.floor(3800 / 2.5)}')
-#Config.set('graphics', 'height', f'{math.floor(2400 / 2.5)}')
+# Config.set('graphics', 'width', f'{math.floor(3800 / 2.5)}')
+# Config.set('graphics', 'height', f'{math.floor(2400 / 2.5)}')
 
 Config.set('graphics', 'width', f'{1441}')
 Config.set('graphics', 'height', f'{752}')
@@ -24,7 +24,6 @@ loading_text = "As temperatures worldwide continue to rise, Club Penguin is unde
 
 class SussyPengs(App):
 
-
     def __init__(self):
         super(SussyPengs, self).__init__()
         self.username = None
@@ -42,8 +41,8 @@ class SussyPengs(App):
     def cutscene(self):
         def advance_text(*args):
             app.root.ids.menu_text.pos[1] += 2
-        callback = Clock.schedule_interval(advance_text, 0.02)
 
+        callback = Clock.schedule_interval(advance_text, 0.02)
 
 
 if __name__ == '__main__':
