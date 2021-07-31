@@ -25,6 +25,23 @@
         pos: self.parent.pos
         size: self.size
 
+<TasksPopup>:
+    size_hint: (None, None)
+    background_color: 0, 0, 0, 0
+    size: "800", "920dp"
+
+    Image:
+        size_hint: None, None
+        canvas.before:
+            Color:
+                rgba: 1, 0, 0, 1
+            Line:
+                width: 3
+                rectangle: self.x, self.y, self.width, self.height
+        source: 'assets/clipboard.png'
+        pos: self.parent.pos
+        size: self.parent.size
+
 ScreenManager:
 	transition: SlideTransition(direction="up")
 	Screen:
@@ -112,6 +129,7 @@ ScreenManager:
             app.root.transition = FadeTransition()
         on_enter:
 			Window.size = (app.viewport_size[0], app.viewport_size[1])
+			Window.top = 30
         Image:
             source:'assets/Command_room.png'
             #pos: app.pos
@@ -119,11 +137,23 @@ ScreenManager:
         FloatLayout:
             id: 'game_room'
             size: root.width, root.height
+            BoxLayout:
+                pos_hint: {'center_x': .5, 'center_y': .39}
+                size_hint: 1, None
+                Widget:
+                    size_hint: 0.25, 1
+                LeftPenguin:
+                    id: player_1
+                    size_hint: None, None
 
-            LeftPenguin:
-                id: player_1
-                pos: 330, 310
-                size_hint: None, None
+                Widget:
+                    size_hint: 0.5, None
+
+                RightPenguin:
+                    id: player_6
+                    size_hint: None, None
+                Widget:
+                    size_hint: 0.25, 1
             ForwardPenguin:
                 id: player_2
                 pos: 510, 422
@@ -140,18 +170,63 @@ ScreenManager:
                 id: player_5
                 pos: 920, 422
                 size_hint: None, None
-            RightPenguin:
-                id: player_6
-                pos: 1080, 310
+
+            Button:
+                background_color: (1, 1, 1, 0)
+                on_press:
+                    app.open_tasks()
                 size_hint: None, None
+                Image:
+                    source: 'assets/clipboard.png'
+
 
             BoxLayout:
+                orientation: 'vertical'
                 size_hint: None, None
-                size: 750, 200
-                pos_hint: {'center_x': .5, 'center_y': 0.7}
+                size: 723, 200
+                #pos_hint: {'center_x': .5, 'center_y': None}
+                pos: 395, 0
                 canvas.before:
                     Color:
-                        rgba: 1, 0, 0, 1
+                        rgba: 1, 1, 1, 1
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [(10, 10), (10, 10), (0, 0), (0, 0)]
+                    Color:
+                        rgba: utils.get_color_from_hex("855550")
                     Line:
                         width: 3
-                        rectangle: self.x, self.y, self.width, self.height
+                        rectangle: self.x, self.y - 10, self.width, self.height + 10
+
+                ScrollView:
+                    size_hint: 1, 0.75
+                    Label:
+                        color: C('#101010')
+                        text_size: (self.width, None)
+                        halign: 'left'
+                        valign: 'top'
+                        padding: (10, 10)
+                        size_hint: (1, None)
+                        height: self.texture_size[1]
+                        markup: True
+                        id: chat_logs
+                        text: '[color=#FF0000]Marcus: [/color] Shut up \n'
+                MDSeparator:
+                    size_hint: 0.85, None
+                    orientation: 'horizontal'
+                    height: '1dp'
+                    color: utils.get_color_from_hex("5f6c74")
+                    pos_hint: {'center_x': .5, 'center_y': .5}
+                TextInput:
+                    padding: (10, 0)
+                    size_hint: 1, None
+                    id: chat_box
+                    font_size: '20dp'
+                    size_hint: (1, None)
+                    background_color: 0,0,0,0
+                    multiline: False
+                    height: '40dp'
+                    canvas.before:
+                        Color:
+                            rgb: C('#000000')

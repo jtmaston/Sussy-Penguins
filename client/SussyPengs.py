@@ -1,7 +1,7 @@
 import math
 
 from kivy import Config
-
+from kivy.uix.modalview import ModalView
 
 Config.set('graphics', 'maxfps', '60')
 
@@ -21,6 +21,8 @@ loading_text = "As temperatures worldwide continue to rise, Club Penguin is unde
                "an impostor. A representative of Clam Petroleum, posing as a regular agent, attempts what he can to " \
                "destroy the effort of the Penguins. Can the penguins stop him and save the island?"
 
+class TasksPopup(ModalView):
+    pass
 
 class SussyPengs(MDApp):
 
@@ -32,10 +34,14 @@ class SussyPengs(MDApp):
             math.floor(2400 / 2.5)
         )
 
+    def open_tasks(self):
+        popup = TasksPopup()
+        popup.open()
+
     def build(self):
         super(SussyPengs, self).build()
         self.root.ids.menu_text.text = loading_text
-        self.root.current = 'welcome_screen'
+        self.root.current = 'game_screen'
         self.cutscene()
 
     def cutscene(self):
