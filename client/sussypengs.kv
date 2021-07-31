@@ -39,20 +39,68 @@ ScreenManager:
 	            text_size: 1000, None
                 size: self.texture_size
 	            color: utils.get_color_from_hex("000000")
-	            canvas.before:
-                    Color:
-                        rgba: 1, 0, 0, 1
-                    Line:
-                        width: 3
-                        rectangle: self.x, self.y, self.width, self.height
-	            pos: self.parent.center_x - ( self.width / 2 ), -self.height - 200
-	        Button:
-	            on_press: print("done")
-	            text:'do'
+	            pos: self.parent.center_x - ( self.width / 2 ), -self.height - 150
+	        MDTextButton:
+	            on_press: app.root.current = 'menu_screen'
+	            padding: 20, 20
+	            text:'Skip'
+	            font_name: 'assets/Bumbasti'
 	            size_hint: None, None
-	            size: 100, 100
+	            size: 100, 50
 	        Image:
-	            id: gary_concerned
+                source:'assets/gary_concerned.png'
+                size_hint: None, None
+                size: 240, 240
+                pos: self.parent.width - self.width, 0
+
+    Screen:
+	    name: 'menu_screen'
+	    Image:
+	        source: 'assets/menu.png'
+	    FloatLayout:
+            Label:
+                text: 'Penguin Force'
+                text_size: 1000, None
+                valign: 'center'
+                halign: 'center'
+                font_size: '50dp'
+                font_name: 'assets/Bumbasti'
+                size_hint: None, None
+                pos_hint: {'center_x': .5, 'center_y': .5}
+
+            Label:
+                text: 'Operation Burning heat'
+                text_size: 1000, None
+                valign: 'center'
+                halign: 'center'
+                font_size: '25dp'
+                font_name: 'assets/Bumbasti'
+                size_hint: None, None
+                pos_hint: {'center_x': .5, 'center_y': .4}
+
+            BoxLayout:
+                pos_hint: {'center_x': .5, 'center_y': .3}
+                size_hint: 0.7, None
+                Widget:
+                    size_hint: 0.20, 1
+                MDTextButton:
+                    text: 'Play'
+                    font_name: 'assets/Bumbasti'
+                    font_size: '25dp'
+                    on_press:
+                        app.root.current = 'character_select'
+                Widget:
+                    size_hint: 0.1, 1
+                MDTextButton:
+                    text: 'Help'
+                    font_name: 'assets/Bumbasti'
+                    font_size: '25dp'
+                    on_press:
+                        app.root.current = 'tutorial'
+                Widget:
+                    size_hint: 0.20, 1
+
+	        Image:
                 source:'assets/gary_concerned.png'
                 size_hint: None, None
                 size: 240, 240
@@ -60,6 +108,10 @@ ScreenManager:
 
 	Screen:
         name:'game_screen'
+        on_pre_enter:
+            app.root.transition = FadeTransition()
+        on_enter:
+			Window.size = (app.viewport_size[0], app.viewport_size[1])
         Image:
             source:'assets/Command_room.png'
             #pos: app.pos
@@ -92,3 +144,14 @@ ScreenManager:
                 id: player_6
                 pos: 1080, 310
                 size_hint: None, None
+
+            BoxLayout:
+                size_hint: None, None
+                size: 750, 200
+                pos_hint: {'center_x': .5, 'center_y': 0.7}
+                canvas.before:
+                    Color:
+                        rgba: 1, 0, 0, 1
+                    Line:
+                        width: 3
+                        rectangle: self.x, self.y, self.width, self.height

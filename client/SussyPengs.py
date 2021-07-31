@@ -2,6 +2,7 @@ import math
 
 from kivy import Config
 
+
 Config.set('graphics', 'maxfps', '60')
 
 # Config.set('graphics', 'width', f'{math.floor(3800 / 2.5)}')
@@ -9,8 +10,7 @@ Config.set('graphics', 'maxfps', '60')
 
 Config.set('graphics', 'width', f'{1441}')
 Config.set('graphics', 'height', f'{752}')
-
-from kivy.app import App
+from kivymd.app import MDApp
 from kivy.core.window import Window as KVWindow
 from kivy.clock import Clock
 
@@ -19,10 +19,10 @@ loading_text = "As temperatures worldwide continue to rise, Club Penguin is unde
                "energy. Dubbed Puffle Power, it relies on the black puffles, fed with O'berries, to generate more " \
                "power. \n \n \nThey gathered, ready to build this magical machine, not knowing that among them lay " \
                "an impostor. A representative of Clam Petroleum, posing as a regular agent, attempts what he can to " \
-               "destroy the effort of the Penguins. His goal? To sabotage the penguin's machine."
+               "destroy the effort of the Penguins. Can the penguins stop him and save the island?"
 
 
-class SussyPengs(App):
+class SussyPengs(MDApp):
 
     def __init__(self):
         super(SussyPengs, self).__init__()
