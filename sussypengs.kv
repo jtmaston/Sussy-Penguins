@@ -1,0 +1,88 @@
+#:import C kivy.utils.get_color_from_hex
+#:import RiseInTransition kivy.uix.screenmanager.RiseInTransition
+#:import SlideTransition kivy.uix.screenmanager.SlideTransition
+#:import FadeTransition kivy.uix.screenmanager.FadeTransition
+#:import Window kivy.core.window.Window
+#:import Factory kivy.factory.Factory
+#:import utils kivy.utils
+#:import math math
+
+<RightPenguin@Widget>:
+    Image:
+        source: 'assets/right_peng.png'
+        pos: self.parent.pos
+        size: self.size
+
+<LeftPenguin@Widget>:
+    Image:
+        source: 'assets/left_peng.png'
+        pos: self.parent.pos
+        size: self.size
+
+<ForwardPenguin@Widget>:
+    Image:
+        source: 'assets/penguin_blue_trimmed.png'
+        pos: self.parent.pos
+        size: self.size
+
+ScreenManager:
+	transition: SlideTransition(direction="up")
+	Screen:
+	    name: 'welcome_screen'
+	    Image:
+	        source: 'assets/menu.png'
+	    FloatLayout:
+	        Label:
+	            id: menu_text
+	            font_size: '50dp'
+	            font_name: 'assets/Segoe UI'
+	            text_size: 1000, None
+                size: self.texture_size
+	            color: utils.get_color_from_hex("000000")
+	            canvas.before:
+                    Color:
+                        rgba: 1, 0, 0, 1
+                    Line:
+                        width: 3
+                        rectangle: self.x, self.y, self.width, self.height
+	            pos: self.parent.center_x - ( self.width / 2 ), -self.height - 200
+	        Button:
+	            on_press: print("done")
+	            text:'do'
+	            size_hint: None, None
+	            size: 100, 100
+
+	Screen:
+        name:'game_screen'
+        Image:
+            source:'assets/Command_room.png'
+            #pos: app.pos
+            size: app.viewport_size
+        FloatLayout:
+            id: 'game_room'
+            size: root.width, root.height
+
+            LeftPenguin:
+                id: player_1
+                pos: 330, 310
+                size_hint: None, None
+            ForwardPenguin:
+                id: player_2
+                pos: 510, 422
+                size_hint: None, None
+            ForwardPenguin:
+                id: player_3
+                pos: 640, 422
+                size_hint: None, None
+            ForwardPenguin:
+                id: player_4
+                pos: 780, 422
+                size_hint: None, None
+            ForwardPenguin:
+                id: player_5
+                pos: 920, 422
+                size_hint: None, None
+            RightPenguin:
+                id: player_6
+                pos: 1080, 310
+                size_hint: None, None
