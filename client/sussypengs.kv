@@ -7,21 +7,21 @@
 #:import utils kivy.utils
 #:import math math
 
-<RightPenguin@Widget>:
+<RightPenguin>:
     Image:
-        source: 'assets/right_peng.png'
+        source:'assets/%s/right.png'%self.parent.penguin_color
         pos: self.parent.pos
         size: self.size
 
-<LeftPenguin@Widget>:
+<LeftPenguin>:
     Image:
-        source: 'assets/left_peng.png'
+        source:'assets/%s/left.png'%self.parent.penguin_color
         pos: self.parent.pos
         size: self.size
 
-<ForwardPenguin@Widget>:
+<ForwardPenguin>:
     Image:
-        source: 'assets/penguin_blue_trimmed.png'
+        source:'assets/%s/forward.png'%self.parent.penguin_color
         pos: self.parent.pos
         size: self.size
 
@@ -32,12 +32,6 @@
 
     Image:
         size_hint: None, None
-        canvas.before:
-            Color:
-                rgba: 1, 0, 0, 1
-            Line:
-                width: 3
-                rectangle: self.x, self.y, self.width, self.height
         source: 'assets/clipboard.png'
         pos: self.parent.pos
         size: self.parent.size
@@ -69,6 +63,82 @@ ScreenManager:
                 size_hint: None, None
                 size: 240, 240
                 pos: self.parent.width - self.width, 0
+
+    Screen:
+        name: 'character_select'
+        Image:
+	        source: 'assets/menu.png'
+	    FloatLayout:
+            Label:
+                text: 'Pick a color'
+                text_size: 1000, None
+                valign: 'center'
+                halign: 'center'
+                font_size: '30dp'
+                font_name: 'assets/Bumbasti'
+                size_hint: None, None
+                pos_hint: {'center_x': .5, 'center_y': .9}
+            GridLayout:
+                size_hint: 0.5, 0.5
+                pos_hint: {'center_x': .5, 'center_y': .6}
+                rows: 3
+                cols: 3
+                Button:
+                    background_color: (1, 1, 1, 0)
+                    on_press:
+                        app.penguin_color = 'blue'
+                        app.root.current = 'name_select'
+                    Image:
+                        source:'assets/blue/forward.png'
+                        pos: self.parent.pos
+                        size: self.parent.size
+                Button:
+                    background_color: 1, 1, 1, 0
+                    Image:
+                        source:'assets/green/forward.png'
+                        pos: self.parent.pos
+                        size: self.parent.size
+                Button:
+                    background_color: 1, 1, 1, 0
+                    Image:
+                        source:'assets/yellow/forward.png'
+                        pos: self.parent.pos
+                        size: self.parent.size
+                Button:
+                    background_color: 1, 1, 1, 0
+                    Image:
+                        source:'assets/red/forward.png'
+                        pos: self.parent.pos
+                        size: self.parent.size
+                Button:
+                    background_color: 1, 1, 1, 0
+                    Image:
+                        source:'assets/pink/forward.png'
+                        pos: self.parent.pos
+                        size: self.parent.size
+
+    Screen:
+        name: 'name_select'
+        Image:
+	        source: 'assets/menu.png'
+        Label:
+            text: 'And a name'
+            text_size: 1000, None
+            valign: 'center'
+            halign: 'center'
+            font_size: '30dp'
+            font_name: 'assets/Bumbasti'
+            size_hint: None, None
+            pos_hint: {'center_x': .5, 'center_y': .5}
+        TextInput:
+            size_hint: 0.2, None
+            multiline: False
+            height: '40dp'
+            font_size: '20dp'
+            pos_hint: {'center_x': .5, 'center_y': .4}
+            on_text_validate:
+                app.username = self.text
+                app.find_game()
 
     Screen:
 	    name: 'menu_screen'

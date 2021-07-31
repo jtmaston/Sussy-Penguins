@@ -9,10 +9,18 @@ from twisted.internet.protocol import Protocol, Factory, connectionDone
 
 from roles_generator import *
 
+FORMAT = '%(asctime)-15s %(message)s'
+logging.basicConfig(format=FORMAT, level=logging.INFO)
+
 
 def get_transportable_data(packet) -> bytes:  # helper method to get a transportable version of non-encoded data
     return json.dumps(packet).encode()
 
+
+class Room:
+    def __init__(self):
+        self.players = None
+        self.id = None
 
 class Server(Protocol):
     def __init__(self, factory):
@@ -22,7 +30,7 @@ class Server(Protocol):
         self.player_pool = dict()
 
     def connectionMade(self):
-        print(self)
+        pass
 
     def connectionLost(self, reason=connectionDone):
         if self.endpoint_username is not None:
@@ -45,6 +53,9 @@ class Server(Protocol):
             logging.error("Connection forced closed.")
             self.transport.loseConnection()
             return
+        if packet['command'] == 'ask_game':
+            if len(self.rooms) == 0:
+                self.rooms['room_0'] = Room()
 
     def dataReceived(self, data):
         data = data.split('\r\n'.encode())
