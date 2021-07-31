@@ -72,6 +72,8 @@ ScreenManager:
 
     Screen:
 	    name: 'menu_screen'
+	    on_enter:
+	        app.cutscene_callback.cancel()
 	    Image:
 	        source: 'assets/menu.png'
 	    FloatLayout:
@@ -162,10 +164,10 @@ ScreenManager:
                 id: player_3
                 pos: 640, 422
                 size_hint: None, None
-            ForwardPenguin:
-                id: player_4
-                pos: 780, 422
-                size_hint: None, None
+            #ForwardPenguin:
+            #    id: player_4
+            #    pos: 780, 422
+            #    size_hint: None, None
             ForwardPenguin:
                 id: player_5
                 pos: 920, 422
@@ -211,7 +213,7 @@ ScreenManager:
                         height: self.texture_size[1]
                         markup: True
                         id: chat_logs
-                        text: '[color=#FF0000]Marcus: [/color] Shut up \n'
+                        text: "[color=#FF0000]Marcus: [/color] I honestly think it's Nancy \n[color=#FF0000]Nancy: [/color] Oh, yeah? Well I healed Andrew, what did you do? \n[color=#FF0000]Marcus: [/color] You're lying, I'm the detective and saw you sabotage the reactor \n[color=#FF0000]Nancy: [/color] Not true. Marcus sus \n\n"
                 MDSeparator:
                     size_hint: 0.85, None
                     orientation: 'horizontal'

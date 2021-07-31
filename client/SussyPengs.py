@@ -1,7 +1,10 @@
 import math
+from sys import modules
 
 from kivy import Config
+from kivy.support import install_twisted_reactor
 from kivy.uix.modalview import ModalView
+from twisted.internet import reactor
 
 Config.set('graphics', 'maxfps', '60')
 
@@ -13,6 +16,11 @@ Config.set('graphics', 'height', f'{752}')
 from kivymd.app import MDApp
 from kivy.core.window import Window as KVWindow
 from kivy.clock import Clock
+from networking import *
+
+if 'twisted.internet.reactor' in modules:
+    del modules['twisted.internet.reactor']
+install_twisted_reactor()  # integrate twisted with kivy
 
 loading_text = "As temperatures worldwide continue to rise, Club Penguin is under threat from melting. In a " \
                "last ditch effort to preserve what little is left, the Elite Penguin Force has devised a new form of " \
@@ -33,6 +41,7 @@ class SussyPengs(MDApp):
             math.floor(3800 / 2.5),
             math.floor(2400 / 2.5)
         )
+        self.factory = None
 
     def open_tasks(self):
         popup = TasksPopup()
@@ -40,6 +49,8 @@ class SussyPengs(MDApp):
 
     def build(self):
         super(SussyPengs, self).build()
+        self.factory = ClientFactory(self)
+        reactor.connectTCP("localhost", 8123, self.factory)
         self.root.ids.menu_text.text = loading_text
         self.root.current = 'game_screen'
         self.cutscene()
@@ -48,7 +59,7 @@ class SussyPengs(MDApp):
         def advance_text(*args):
             app.root.ids.menu_text.pos[1] += 2
 
-        callback = Clock.schedule_interval(advance_text, 0.02)
+        self.cutscene_callback = Clock.schedule_interval(advance_text, 0.02)
 
 
 if __name__ == '__main__':
