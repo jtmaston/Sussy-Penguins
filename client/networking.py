@@ -38,7 +38,6 @@ class Client(Protocol):  # defines the communications protocol
         if command['command'] == 'hello':
             self.transport.write(get_transportable_data({'sender': "server", "command": 'hello'}))
         elif command['command'] == 'stat_block':
-            print(command)
             self.factory.application.show_stats(loads(command['stat_block']))
 
     def connectionLost(self, reason=connectionDone):

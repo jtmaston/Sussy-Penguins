@@ -93,11 +93,17 @@ class SussyPengs(MDApp):
         }))
 
     def show_stats(self, stats):
-        print(stats)
+        if stats['occupation'] != 'Medic':
+            self.root.ids.profession_pic.source = f'assets/{stats["occupation"]}.png'
+        else:
+            self.root.ids.profession_pic.source = f'assets/gary_concerned.png'
         self.root.ids.stats_block.text = f"Health: {stats['health']}," \
-                              f" Repair: {stats['repair']}," \
-                              f" Computer: {stats['computer']}," \
-                              f" Technical: {stats['technical']}"
+                                         f" Repair: {stats['repair']}," \
+                                         f" Computer: {stats['computer']}," \
+                                         f" Technical: {stats['technical']}"
+        self.root.ids.profession_text.text = f"You are an {stats['occupation']}"\
+            if stats['occupation'][0] in ("A", "E", "I", "O", "U") else (
+                    f"You are a {stats['occupation']}")
         self.root.current = 'stats'
 
     def cutscene(self):

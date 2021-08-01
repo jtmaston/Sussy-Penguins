@@ -178,20 +178,20 @@ ScreenManager:
 	        source: 'assets/menu.png'
         Image:
             id: profession_pic
-            source: 'assets/Engineer.png'
+            #source: 'assets/Engineer.png'
             size_hint: None, None
             size: 200, 200
-            pos_hint: {'center_x': .5, 'center_y': .5}
+            pos_hint: {'center_x': .5, 'center_y': .7}
 
         Label:
-            text: ("You are an %s" %app.profession) if app.profession[0] in "AEIOU" else ("You are a %s" %app.profession)
+            id: profession_text
             text_size: 1000, None
             valign: 'center'
             halign: 'center'
             font_size: '25dp'
             font_name: 'assets/Bumbasti'
             size_hint: None, None
-            pos_hint: {'center_x': .5, 'center_y': .3}
+            pos_hint: {'center_x': .5, 'center_y': .4}
 
         Label:
             id: stats_block
@@ -202,7 +202,22 @@ ScreenManager:
             font_size: '20dp'
             font_name: 'assets/Segoe UI'
             size_hint: None, None
-            pos_hint: {'center_x': .5, 'center_y': .2}
+            pos_hint: {'center_x': .5, 'center_y': .3}
+
+        MDSpinner:
+	        size_hint: None, None
+	        size: 100, 100
+	        pos_hint: {'center_x': .5, 'center_y': .2}
+            color: [1, 1, 1, 1]
+        Label:
+            text: 'Waiting for other players'
+            text_size: 1000, None
+            valign: 'center'
+            halign: 'center'
+            font_size: '25dp'
+            font_name: 'assets/Bumbasti'
+            size_hint: None, None
+            pos_hint: {'center_x': .5, 'center_y': .1}
 
     Screen:
 	    name: 'menu_screen'
