@@ -94,24 +94,36 @@ ScreenManager:
                         size: self.parent.size
                 Button:
                     background_color: 1, 1, 1, 0
+                    on_press:
+                        app.penguin_color = 'green'
+                        app.root.current = 'name_select'
                     Image:
                         source:'assets/green/forward.png'
                         pos: self.parent.pos
                         size: self.parent.size
                 Button:
                     background_color: 1, 1, 1, 0
+                    on_press:
+                        app.penguin_color = 'yellow'
+                        app.root.current = 'name_select'
                     Image:
                         source:'assets/yellow/forward.png'
                         pos: self.parent.pos
                         size: self.parent.size
                 Button:
                     background_color: 1, 1, 1, 0
+                    on_press:
+                        app.penguin_color = 'red'
+                        app.root.current = 'name_select'
                     Image:
                         source:'assets/red/forward.png'
                         pos: self.parent.pos
                         size: self.parent.size
                 Button:
                     background_color: 1, 1, 1, 0
+                    on_press:
+                        app.penguin_color = 'pink'
+                        app.root.current = 'name_select'
                     Image:
                         source:'assets/pink/forward.png'
                         pos: self.parent.pos

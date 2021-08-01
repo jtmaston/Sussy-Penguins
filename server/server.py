@@ -19,8 +19,18 @@ def get_transportable_data(packet) -> bytes:  # helper method to get a transport
 
 class Room:
     def __init__(self):
-        self.players = None
+        self.players = dict()
         self.id = None
+        self.friendlies_pool = friendlies
+        self.has_killer = False
+
+    def add_player(self, name):
+        if random.randint(0, 100) < 16 and not self.has_killer:
+            self.players[name] = generate_stat_block(evil=True)
+            self.has_killer = True
+        else:
+            self.players[name] = generate_stat_block()
+
 
 class Server(Protocol):
     def __init__(self, factory):
@@ -54,8 +64,32 @@ class Server(Protocol):
             self.transport.loseConnection()
             return
         if packet['command'] == 'ask_game':
-            if len(self.rooms) == 0:
+            if len(self.rooms) == 0:            # this creates the first room
                 self.rooms['room_0'] = Room()
+                self.rooms['room_0'].add_player(packet['sender'])   # adds the player, which makes a stat block
+                self.transport.write(
+                    get_transportable_data({'sender': 'server',
+                                            'command': 'stat_block',
+                                            'stat_block': json.dumps(self.rooms['room_0'].players[packet['sender']])})
+                )
+            else:
+                try:
+                    for i in range(1, 20):
+                        if len(self.rooms[f"rooms_{i}"]) < 6:
+                            self.rooms[f"rooms_{i}"].add_player(packet['sender'])
+                            self.transport.write(
+                                get_transportable_data(
+                                    {'sender': 'server',
+                                     'command': 'stat_block',
+                                     'stat_block': json.dumps(self.rooms[f"rooms_{i}"])})
+                            )
+                except KeyError as index:   # this creates a new room if all previous are full
+                    self.rooms[f'room_{index}'] = Room()
+                    self.rooms[f'room_{index}'].add_player(packet['sender'])
+                    self.transport.write(
+                        get_transportable_data(
+                            {'sender': 'server', 'command': 'stat_block', 'stat_block': json.dumps(self.rooms[0])})
+                    )
 
     def dataReceived(self, data):
         data = data.split('\r\n'.encode())
