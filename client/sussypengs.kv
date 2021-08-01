@@ -151,6 +151,58 @@ ScreenManager:
             on_text_validate:
                 app.username = self.text
                 app.find_game()
+                app.root.current = 'loading_screen'
+
+    Screen:
+        name: 'loading_screen'
+        Image:
+	        source: 'assets/menu.png'
+	    MDSpinner:
+	        size_hint: None, None
+	        size: 200, 200
+	        pos_hint: {'center_x': .5, 'center_y': .5}
+            color: [1, 1, 1, 1]
+        Label:
+            text: 'Hang tight\n Finding you a room'
+            text_size: 1000, None
+            valign: 'center'
+            halign: 'center'
+            font_size: '25dp'
+            font_name: 'assets/Bumbasti'
+            size_hint: None, None
+            pos_hint: {'center_x': .5, 'center_y': .3}
+
+    Screen:
+        name: 'stats'
+        Image:
+	        source: 'assets/menu.png'
+        Image:
+            id: profession_pic
+            source: 'assets/Engineer.png'
+            size_hint: None, None
+            size: 200, 200
+            pos_hint: {'center_x': .5, 'center_y': .5}
+
+        Label:
+            text: ("You are an %s" %app.profession) if app.profession[0] in "AEIOU" else ("You are a %s" %app.profession)
+            text_size: 1000, None
+            valign: 'center'
+            halign: 'center'
+            font_size: '25dp'
+            font_name: 'assets/Bumbasti'
+            size_hint: None, None
+            pos_hint: {'center_x': .5, 'center_y': .3}
+
+        Label:
+            id: stats_block
+            text: ""
+            text_size: 1000, None
+            valign: 'center'
+            halign: 'center'
+            font_size: '20dp'
+            font_name: 'assets/Segoe UI'
+            size_hint: None, None
+            pos_hint: {'center_x': .5, 'center_y': .2}
 
     Screen:
 	    name: 'menu_screen'

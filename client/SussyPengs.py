@@ -2,11 +2,12 @@ import math
 from sys import modules
 
 from kivy import Config
+from kivy.graphics import Rectangle, Color
 from kivy.support import install_twisted_reactor
+from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.image import Image
 from kivy.uix.modalview import ModalView
 from kivy.uix.widget import Widget
-
 
 Config.set('graphics', 'maxfps', '60')
 
@@ -19,13 +20,13 @@ from kivymd.app import MDApp
 from kivy.core.window import Window as KVWindow
 from kivy.clock import Clock
 
-
 if 'twisted.internet.reactor' in modules:
     del modules['twisted.internet.reactor']
 install_twisted_reactor()  # integrate twisted with kivy
 
 from twisted.internet import reactor
 from networking import *
+
 loading_text = "As temperatures worldwide continue to rise, Club Penguin is under threat from melting. In a " \
                "last ditch effort to preserve what little is left, the Elite Penguin Force has devised a new form of " \
                "energy. Dubbed Puffle Power, it relies on the black puffles, fed with O'berries, to generate more " \
@@ -67,6 +68,7 @@ class SussyPengs(MDApp):
         )
         self.factory = None
         self.penguin_color = None
+        self.profession = 'Engineer'
 
     def open_tasks(self):
         popup = TasksPopup()
@@ -80,6 +82,8 @@ class SussyPengs(MDApp):
         self.root.ids.menu_text.text = loading_text
         self.root.current = 'welcome_screen'
         self.cutscene()
+        self.root.ids.player_1.penguin_color = 'red'
+        self.root.ids.player_2.penguin_color = 'yellow'
 
     def find_game(self):
         self.factory.client.transport.write(get_transportable_data({
@@ -87,6 +91,14 @@ class SussyPengs(MDApp):
             'color': self.penguin_color,
             'command': 'ask_game'
         }))
+
+    def show_stats(self, stats):
+        print(stats)
+        self.root.ids.stats_block.text = f"Health: {stats['health']}," \
+                              f" Repair: {stats['repair']}," \
+                              f" Computer: {stats['computer']}," \
+                              f" Technical: {stats['technical']}"
+        self.root.current = 'stats'
 
     def cutscene(self):
         def advance_text(*args):

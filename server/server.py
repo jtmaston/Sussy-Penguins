@@ -27,9 +27,11 @@ class Room:
     def add_player(self, name):
         if random.randint(0, 100) < 16 and not self.has_killer:
             self.players[name] = generate_stat_block(evil=True)
+            self.players[name]['evil'] = True
             self.has_killer = True
         else:
             self.players[name] = generate_stat_block()
+            self.players[name]['evil'] = False
 
 
 class Server(Protocol):
