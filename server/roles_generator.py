@@ -1,20 +1,23 @@
 import random
-friendlies = ["Engineer", "Programmer", "Security", "Diplomat", "Medic", "Detective", "Helper"]
+friendlies = ["Engineer", "Programmer", "Security Guard", "Diplomat", "Medic", "Detective"]
 friendly_stats = {
     "Engineer": {
         'repair': +1,
         'technical': +1,
-        'health': -2
+        'health': -2,
+        'computer': 0
     },
     "Programmer": {
         'computer': +1,
         'repair': +1,
-        'health': -2
+        'health': -2,
+        'technical': 0
     },
-    "Security": {
+    "Security Guard": {
         'health': +2,
         'repair': -1,
-        'technical': -1
+        'technical': -1,
+        'computer': 0
     },
     "Diplomat": {
         'repair': -1,
@@ -26,14 +29,14 @@ friendly_stats = {
         'repair': -2,
         'technical': -2,
         'computer': -2,
-        'health': +2
+        'health': +2,
     },
     "Detective": {
         'repair': -2,
         'computer': -2,
-        'health': +1
+        'health': +1,
+        'technical': 0
     },
-    "Helper": {}
 }
 foes = [
     'Saboteur',
