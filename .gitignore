@@ -1,9 +1,4 @@
-# Import cache
-.import/
-
-# Binaries
-bin/
-build/
-lib/
-*.gdns
-*.gdnlib
+venv
+.idea
+old
+client/assets/raw_textures
